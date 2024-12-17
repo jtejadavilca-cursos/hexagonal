@@ -3,8 +3,10 @@ package com.renanalencardev.hexagonal.adapters.in.controller;
 import com.renanalencardev.hexagonal.adapters.in.controller.mapper.CustomerMapper;
 import com.renanalencardev.hexagonal.adapters.in.controller.request.CustomerRequest;
 import com.renanalencardev.hexagonal.adapters.in.controller.response.CustomerResponse;
+import com.renanalencardev.hexagonal.application.core.domain.Customer;
 import com.renanalencardev.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.renanalencardev.hexagonal.application.ports.in.InsertCustomerInputPort;
+import com.renanalencardev.hexagonal.application.ports.in.UpdateCustomerInputPort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +25,9 @@ public class CustomerController {
     @Autowired
     private CustomerMapper customerMapper;
 
+    @Autowired
+    private UpdateCustomerInputPort updateCustomerInputPort;
+
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody @Valid CustomerRequest customerRequest) {
         var customer = customerMapper.toCustomer(customerRequest);
@@ -34,5 +39,13 @@ public class CustomerController {
         var customer = findCustomerByIdInputPort.find(id);
         var customerResponse = customerMapper.toCustomerResponse(customer);
         return ResponseEntity.ok().body(customerResponse);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable final String id, @RequestBody @Valid CustomerRequest customerRequest){
+        Customer customer = customerMapper.toCustomer(customerRequest);
+        customer.setId(id);
+        updateCustomerInputPort.update(customer, customerRequest.getZipCode());
+        return ResponseEntity.noContent().build();
     }
 }
