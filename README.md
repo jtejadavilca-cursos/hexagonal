@@ -39,6 +39,7 @@ implementa os casos de uso e orquestra o fluxo de dados entre o domínio e os ad
 | POST   | `/api/v1/customers`              | Cria um novo cliente |
 | GET    | `/api/v1/customers/{customerId}` | Busca um cliente por id |
 | PUT    | `/api/v1/customers/{customerId}` | Atualiza um cliente por id |
+| DELETE | `/api/v1/customers/{customerId}` | Deleta um cliente por id |
 
 
 ## Configuração
