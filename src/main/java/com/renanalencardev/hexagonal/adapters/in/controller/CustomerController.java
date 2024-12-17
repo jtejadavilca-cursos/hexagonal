@@ -4,6 +4,7 @@ import com.renanalencardev.hexagonal.adapters.in.controller.mapper.CustomerMappe
 import com.renanalencardev.hexagonal.adapters.in.controller.request.CustomerRequest;
 import com.renanalencardev.hexagonal.adapters.in.controller.response.CustomerResponse;
 import com.renanalencardev.hexagonal.application.core.domain.Customer;
+import com.renanalencardev.hexagonal.application.ports.in.DeleteCustomerInputPort;
 import com.renanalencardev.hexagonal.application.ports.in.FindCustomerByIdInputPort;
 import com.renanalencardev.hexagonal.application.ports.in.InsertCustomerInputPort;
 import com.renanalencardev.hexagonal.application.ports.in.UpdateCustomerInputPort;
@@ -28,6 +29,9 @@ public class CustomerController {
     @Autowired
     private UpdateCustomerInputPort updateCustomerInputPort;
 
+    @Autowired
+    private DeleteCustomerInputPort deleteCustomerInputPort;
+
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody @Valid CustomerRequest customerRequest) {
         var customer = customerMapper.toCustomer(customerRequest);
@@ -46,6 +50,12 @@ public class CustomerController {
         Customer customer = customerMapper.toCustomer(customerRequest);
         customer.setId(id);
         updateCustomerInputPort.update(customer, customerRequest.getZipCode());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable final String id){
+        deleteCustomerInputPort.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
