@@ -3,6 +3,7 @@ package com.renanalencardev.hexagonal.adapters.out.repository.mapper;
 import com.renanalencardev.hexagonal.adapters.out.repository.entity.CustomerEntity;
 import com.renanalencardev.hexagonal.application.core.domain.Customer;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CustomerEntityMapper {
