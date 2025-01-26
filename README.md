@@ -126,7 +126,7 @@ O projeto segue os princípios da **Arquitetura Hexagonal**, que visa:
 
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/hexagonal.git
+   git clone https://github.com/renanalencardev/hexagonal.git
    cd hexagonal
    ```
 2. Inicie os serviços com Docker Compose:
@@ -162,6 +162,33 @@ spring:
       password: example
       database: hexagonal
 ```
+
+---
+
+## **Testes**
+
+### **Testes de Arquitetura**
+
+O projeto utiliza o ArchUnit para garantir que as convenções arquiteturais sejam seguidas. Os principais testes incluem:
+
+#### **Testes de Convenção de Nomenclatura**
+- Verifica se as classes seguem o padrão de nomenclatura correto
+- Garante que as classes estejam nos pacotes apropriados
+- Exemplos de regras:
+   - Classes `*Consumer` devem estar no pacote `adapters.in.consumer`
+   - Classes `*Controller` devem estar no pacote `adapters.in.controller`
+   - Classes `*Adapter` devem estar no pacote `adapters.out`
+   - Classes `*UseCase` devem estar no pacote `application.core.usecase`
+
+#### **Testes de Arquitetura em Camadas**
+- Valida as dependências entre as camadas da arquitetura hexagonal
+- Regras de acesso entre camadas:
+   - `AdaptersIn` só pode ser acessada por `Config`
+   - `AdaptersOut` só pode ser acessada por `Config`
+   - `UseCase` só pode ser acessada por `Config`
+   - `PortsIn` pode ser acessada por `UseCase` e `AdaptersIn`
+   - `PortsOut` pode ser acessada por `UseCase` e `AdaptersOut`
+   - `Config` não pode ser acessada por nenhuma camada
 
 ---
 
