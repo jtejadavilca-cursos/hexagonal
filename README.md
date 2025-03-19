@@ -201,5 +201,5 @@ O projeto utiliza o ArchUnit para garantir que as convenções arquiteturais sej
 
 ---
 
-Projeto em desenvolvimento...
+Projeto em desenvolvimento.....
 ```
